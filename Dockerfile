@@ -10,7 +10,7 @@ FROM alpine:3
 LABEL NAME="scriber-influxdb-go"
 LABEL version="0.0.1"
 WORKDIR /scriber
-ENV GIN_MODE=debug
+ENV GIN_MODE=release
 EXPOSE 8090
 COPY .env ./
 COPY --from=build /scriber/app ./
