@@ -23,7 +23,7 @@ var influxdbDefaultDuration string
 var influxdbDefaultLimit string
 
 type scribe struct {
-	Time string `json:"time"`
+	Timestamp string `json:"timestamp"`
 	Url  string `json:"url"`
 }
 
@@ -31,7 +31,7 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Errorln("No .env file found")
 	}
-	scribeName = os.Getenv("SCRIBER_NAME")
+	scribeName = os.Getenv("SCRIBE_NAME")
 	influxdbHost = os.Getenv("INFLUXDB_HOST")
 	influxdbPort = os.Getenv("INFLUXDB_PORT")
 	influxdbToken = os.Getenv("INFLUXDB_TOKEN")
@@ -44,8 +44,8 @@ func main() {
 	log.Debugln("Scribe name: " + scribeName)
 	log.Debugln("InfluxDB measurement: " + influxdbMeasurement)
 	server := gin.Default()
-	server.GET("/:scriber", func(c *gin.Context) {
-		scribe := c.Param("scriber")
+	server.GET("/:scribe", func(c *gin.Context) {
+		scribe := c.Param("scribe")
 		if scribe != scribeName {
 			serveErr(c)
 		} else {
@@ -102,7 +102,7 @@ func serve(c *gin.Context) {
 	response := query(start, stop, limit)
 	var result []scribe
 	for response.Next() {
-		result = append(result, scribe{Time: response.Record().Time().String(), Url: response.Record().ValueByKey("url").(string)})
+		result = append(result, scribe{Timestamp: response.Record().Time().String(), Url: response.Record().ValueByKey("url").(string)})
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"data": result,
