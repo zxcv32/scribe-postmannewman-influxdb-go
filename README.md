@@ -1,5 +1,5 @@
-# Scribe InfluxDB Go
+# ScribeR InfluxDB Go
 
 > Uses InfluxDB2
 
-Scribe to read data from InfluxDB and show in Craftsperson
+Scriber to read data from InfluxDB and show in Craftsperson
