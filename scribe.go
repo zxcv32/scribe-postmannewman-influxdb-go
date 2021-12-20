@@ -81,7 +81,7 @@ func query(start string, stop string, limit string) *api.QueryTableResult {
   				|> yield()`)
 	if err == nil {
 		if result.Err() != nil {
-			log.Errorln("Query error: %s", result.Err().Error())
+			log.Errorf("Query error: %s", result.Err().Error())
 		}
 	} else {
 		log.Errorln("InfluxDB client error: ", err.Error())
