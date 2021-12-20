@@ -1,0 +1,23 @@
+---
+- name: Deleting Scribe Docker Container
+  hosts:
+    docker
+  vars_files:
+    - env
+  become: true
+  become_user: "{{ ansible_user }}"
+  tasks:
+    - name: Copy Docker Compose YAML
+      copy:
+        src: requirements
+        dest: "{{ directory }}"
+    - name: Scribe Down
+      command: docker-compose -p scribe down
+      args:
+        chdir: "{{ directory }}/requirements"
+      environment:
+        SCRIBE_PORT: "{{ scribePort }}"
+    - name: Delete Docker Compose YAML
+      file:
+        state: absent
+        path: "{{ directory }}"

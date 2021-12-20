@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postmannewman-influxdb-go:
+    image: ghcr.io/sea-creeper/scribe-postmannewman-influxdb-go:main
+    restart: always
+    environment:
+      INFLUXDB_ORG: ${INFLUXDB_ORG}
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+    ports:
+      - ${SCRIBE_PORT}:9080
+    networks:
+      - db
+      - creeper
+
+networks:
+  db:
+    driver: bridge
+  creeper:
+    driver: bridge

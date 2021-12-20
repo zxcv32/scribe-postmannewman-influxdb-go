@@ -1,0 +1,2 @@
+directory: /tmp/scribe-postmannewman-influxdb-go
+scribePort: 9080

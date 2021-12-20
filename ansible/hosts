@@ -1,0 +1,10 @@
+[docker]
+#docker.home.zxcv32.com
+localhost
+
+[all:vars]
+ansible_connection=ssh
+ansible_user='zxcv32'
+ansible_become=yes
+ansible_become_method=sudo
+ansible_python_interpreter='/usr/bin/env python3'

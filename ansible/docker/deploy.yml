@@ -1,0 +1,33 @@
+---
+- name: Deploy Scribe Docker Container
+  hosts:
+    docker
+  vars_files:
+    - env
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars_prompt:
+  - name: influxdbOrg
+    prompt: Enter InfluxDB organization name
+    private: no
+    default: seacreeper
+  - name: influxdbToken
+    prompt: Enter InfluxDB token
+    private: yes
+  tasks:
+    - name: Copy Docker Compose YAML
+      copy:
+        src: requirements
+        dest: "{{ directory }}"
+    - name:  Deploy Scribe
+      command: docker-compose -p scribe up -d
+      args:
+        chdir: "{{ directory }}/requirements"
+      environment:
+        INFLUXDB_ORG: "{{ influxdbOrg }}"
+        INFLUXDB_TOKEN: "{{ influxdbToken }}"
+        SCRIBE_PORT: "{{ scribePort }}"
+    - name: Delete Docker Compose YAML
+      file:
+        state: absent
+        path: "{{ directory }}"
