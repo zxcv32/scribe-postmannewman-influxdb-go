@@ -11,7 +11,7 @@ LABEL NAME="scribe-influxdb-go"
 LABEL version="0.0.1"
 WORKDIR /scribe
 ENV GIN_MODE=release
-EXPOSE 8090
+EXPOSE 9080
 COPY .env ./
 COPY --from=build /scribe/app ./
 # Please specify at least INFLUXDB_ORG and INFLUXDB_TOKEN at runtime
